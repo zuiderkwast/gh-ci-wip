@@ -1,0 +1,26 @@
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - 'foo.pl'
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate markdown
+        uses: actions/checkout@v2
+        shell: bash
+        env:
+          PR: ${{ github.event.number }}
+        run: |
+          perl foo.pl > foo-$PR.md
+          echo foo-$PR.md generated
+
+      - name: Upload markdown preview
+        uses: actions/upload-artifact@v2
+        env:
+          PR: ${{ github.event.number }}
+        with:
+          name: Upload module API docs preview
+          path: foo-$PR.md
