@@ -8,8 +8,9 @@ jobs:
   preview:
     runs-on: ubuntu-latest
     steps:
-      - name: Generate markdown
+      - name: Checkout
         uses: actions/checkout@v2
+      - name: Generate markdown
         shell: bash
         env:
           PR: ${{ github.event.number }}
