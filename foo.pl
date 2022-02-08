@@ -4,6 +4,8 @@ Test preview
 
 Is this rendering properly?
 * bullet
+  - sublist
+  - item
 * bullet
 
 What about this?
