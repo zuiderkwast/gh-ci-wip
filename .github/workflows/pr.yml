@@ -20,8 +20,6 @@ jobs:
 
       - name: Upload markdown preview
         uses: actions/upload-artifact@v2
-        env:
-          PR: ${{ github.event.number }}
         with:
           name: Upload module API docs preview
-          path: foo-$PR.md
+          path: foo-${{ github.event.number }}.md
