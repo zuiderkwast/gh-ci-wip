@@ -6,6 +6,7 @@ Is this rendering properly?
 * bullet
   - sublist
   - item
+  - done
 * bullet
 
 What about this?
