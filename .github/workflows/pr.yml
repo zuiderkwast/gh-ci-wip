@@ -15,11 +15,20 @@ jobs:
         env:
           PR: ${{ github.event.number }}
         run: |
-          perl foo.pl > foo-$PR.md
-          echo foo-$PR.md generated
+          perl foo.pl > foo.md
+          echo foo.md generated
 
-      - name: Upload markdown preview
-        uses: actions/upload-artifact@v2
-        with:
-          name: Upload module API docs preview
-          path: foo-${{ github.event.number }}.md
+      - name: Add comment to PR
+        if: contains(github.event.comment.body, 'special string')
+        env:
+          URL: ${{ github.event.issue.comments_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          printf '%s\n' "<details>" "<summary>Markdown preview</summary>" "" > msg
+          cat foo.md >> msg
+          echo '</details>' >> msg
+          jq -Rs '{"body":.}' < msg > data.json
+          curl -X POST $URL \
+            -H "Content-Type: application/json" \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            --data "@data.json"
