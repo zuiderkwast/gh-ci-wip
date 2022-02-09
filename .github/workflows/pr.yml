@@ -19,7 +19,6 @@ jobs:
           echo foo.md generated
 
       - name: Add comment to PR
-        if: contains(github.event.comment.body, 'special string')
         env:
           URL: ${{ github.event.issue.comments_url }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
